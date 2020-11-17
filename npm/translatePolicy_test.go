@@ -201,7 +201,7 @@ func TestCraftPartialIptEntrySpecFromOpsAndLabels(t *testing.T) {
 		util.IptablesModuleFlag,
 		util.IptablesSetModuleFlag,
 		util.IptablesMatchSetFlag,
-		util.GetHashedName("ns-testnamespace"),
+		util.GetHashedName("ns_testnamespace"),
 		util.IptablesSrcFlag,
 		util.IptablesModuleFlag,
 		util.IptablesSetModuleFlag,
@@ -222,7 +222,7 @@ func TestCraftPartialIptEntrySpecFromOpsAndLabels(t *testing.T) {
 		util.IptablesModuleFlag,
 		util.IptablesSetModuleFlag,
 		util.IptablesMatchSetFlag,
-		util.GetHashedName("ns-testnamespace"),
+		util.GetHashedName("ns_testnamespace"),
 		util.IptablesDstFlag,
 		util.IptablesModuleFlag,
 		util.IptablesSetModuleFlag,
@@ -271,7 +271,7 @@ func TestCraftPartialIptEntryFromSelector(t *testing.T) {
 		util.IptablesModuleFlag,
 		util.IptablesSetModuleFlag,
 		util.IptablesMatchSetFlag,
-		util.GetHashedName("ns-testnamespace"),
+		util.GetHashedName("ns_testnamespace"),
 		util.IptablesSrcFlag,
 		util.IptablesModuleFlag,
 		util.IptablesSetModuleFlag,
@@ -306,7 +306,7 @@ func TestCraftPartialIptablesCommentFromSelector(t *testing.T) {
 
 	selector = &metav1.LabelSelector{}
 	comment = craftPartialIptablesCommentFromSelector("testnamespace", selector, false)
-	expectedComment = "ns-testnamespace"
+	expectedComment = "ns_testnamespace"
 	if comment != expectedComment {
 		t.Errorf("TestCraftPartialIptablesCommentFromSelector failed @ empty podSelector comparison")
 		t.Errorf("comment:\n%v", comment)
@@ -370,7 +370,7 @@ func TestCraftPartialIptablesCommentFromSelector(t *testing.T) {
 		},
 	}
 	comment = craftPartialIptablesCommentFromSelector("", nsSelector, true)
-	expectedComment = "ns-k0:v0-AND-ns-k1:v10-AND-ns-k1:v11-AND-ns-!k2"
+	expectedComment = "ns_k0:v0-AND-ns-k1:v10-AND-ns-k1:v11-AND-ns-!k2"
 	if comment != expectedComment {
 		t.Errorf("TestCraftPartialIptablesCommentFromSelector failed @ namespace selector comparison")
 		t.Errorf("comment:\n%v", comment)
@@ -406,7 +406,7 @@ func TestGetDefaultDropEntries(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -446,7 +446,7 @@ func TestGetDefaultDropEntries(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -486,7 +486,7 @@ func TestGetDefaultDropEntries(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -513,7 +513,7 @@ func TestGetDefaultDropEntries(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -547,7 +547,7 @@ func TestGetDefaultDropEntries(t *testing.T) {
 
 func TestTranslateIngress(t *testing.T) {
 	ns := "testnamespace"
-    name := "testnetworkpolicyname"
+	name := "testnetworkpolicyname"
 	targetSelector := metav1.LabelSelector{
 		MatchLabels: map[string]string{
 			"context": "dev",
@@ -644,7 +644,7 @@ func TestTranslateIngress(t *testing.T) {
 	expectedSets := []string{
 		"context:dev",
 		"testNotIn:frontend",
-		"ns-testnamespace",
+		"ns_testnamespace",
 		"app:db",
 		"testIn:frontend",
 		"region:northpole",
@@ -658,10 +658,10 @@ func TestTranslateIngress(t *testing.T) {
 	}
 
 	expectedLists := []string{
-		"ns-ns:dev",
-		"ns-testIn:frontendns",
-		"ns-planet:earth",
-		"ns-keyExists",
+		"ns_ns:dev",
+		"ns_testIn:frontendns",
+		"ns_planet:earth",
+		"ns_keyExists",
 	}
 
 	if !reflect.DeepEqual(lists, expectedLists) {
@@ -677,7 +677,7 @@ func TestTranslateIngress(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -693,7 +693,7 @@ func TestTranslateIngress(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -723,7 +723,7 @@ func TestTranslateIngress(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -739,12 +739,12 @@ func TestTranslateIngress(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-ns:dev"),
+				util.GetHashedName("ns_ns:dev"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testIn:frontendns"),
+				util.GetHashedName("ns_testIn:frontendns"),
 				util.IptablesSrcFlag,
 				util.IptablesProtFlag,
 				string(v1.ProtocolTCP),
@@ -764,12 +764,12 @@ func TestTranslateIngress(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-planet:earth"),
+				util.GetHashedName("ns_planet:earth"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-keyExists"),
+				util.GetHashedName("ns_keyExists"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -785,7 +785,7 @@ func TestTranslateIngress(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -817,7 +817,7 @@ func TestTranslateIngress(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -949,7 +949,7 @@ func TestTranslateEgress(t *testing.T) {
 	expectedSets := []string{
 		"context:dev",
 		"testNotIn:frontend",
-		"ns-testnamespace",
+		"ns_testnamespace",
 		"app:db",
 		"testIn:frontend",
 		"region:northpole",
@@ -963,10 +963,10 @@ func TestTranslateEgress(t *testing.T) {
 	}
 
 	expectedLists := []string{
-		"ns-ns:dev",
-		"ns-testIn:frontendns",
-		"ns-planet:earth",
-		"ns-keyExists",
+		"ns_ns:dev",
+		"ns_testIn:frontendns",
+		"ns_planet:earth",
+		"ns_keyExists",
 	}
 
 	if !reflect.DeepEqual(lists, expectedLists) {
@@ -982,7 +982,7 @@ func TestTranslateEgress(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1001,7 +1001,7 @@ func TestTranslateEgress(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1028,12 +1028,12 @@ func TestTranslateEgress(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-ns:dev"),
+				util.GetHashedName("ns_ns:dev"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testIn:frontendns"),
+				util.GetHashedName("ns_testIn:frontendns"),
 				util.IptablesDstFlag,
 				util.IptablesProtFlag,
 				string(v1.ProtocolTCP),
@@ -1042,7 +1042,7 @@ func TestTranslateEgress(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1069,7 +1069,7 @@ func TestTranslateEgress(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1085,12 +1085,12 @@ func TestTranslateEgress(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-planet:earth"),
+				util.GetHashedName("ns_planet:earth"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-keyExists"),
+				util.GetHashedName("ns_keyExists"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1122,7 +1122,7 @@ func TestTranslateEgress(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1175,7 +1175,7 @@ func TestDenyAllPolicy(t *testing.T) {
 
 	sets, _, lists, _, _, iptEntries := translatePolicy(denyAllPolicy)
 
-	expectedSets := []string{"ns-testnamespace"}
+	expectedSets := []string{"ns_testnamespace"}
 	if !reflect.DeepEqual(sets, expectedSets) {
 		t.Errorf("translatedPolicy failed @ deny-all-policy sets comparison")
 		t.Errorf("sets: %v", sets)
@@ -1209,7 +1209,7 @@ func TestAllowBackendToFrontend(t *testing.T) {
 
 	expectedSets := []string{
 		"app:backend",
-		"ns-testnamespace",
+		"ns_testnamespace",
 		"app:frontend",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
@@ -1234,7 +1234,7 @@ func TestAllowBackendToFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1244,7 +1244,7 @@ func TestAllowBackendToFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1266,7 +1266,7 @@ func TestAllowBackendToFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1289,7 +1289,7 @@ func TestAllowBackendToFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1311,7 +1311,7 @@ func TestAllowBackendToFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1347,7 +1347,7 @@ func TestAllowAllToAppFrontend(t *testing.T) {
 
 	expectedSets := []string{
 		"app:frontend",
-		"ns-testnamespace",
+		"ns_testnamespace",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
 		t.Errorf("translatedPolicy failed @ ALLOW-all-TO-app:frontend-policy sets comparison")
@@ -1371,7 +1371,7 @@ func TestAllowAllToAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1408,7 +1408,7 @@ func TestDenyAllToAppFrontend(t *testing.T) {
 
 	expectedSets := []string{
 		"app:frontend",
-		"ns-testnamespace",
+		"ns_testnamespace",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
 		t.Errorf("translatedPolicy failed @ ALLOW-none-TO-app:frontend-policy sets comparison")
@@ -1444,7 +1444,7 @@ func TestNamespaceToFrontend(t *testing.T) {
 
 	expectedSets := []string{
 		"app:frontend",
-		"ns-testnamespace",
+		"ns_testnamespace",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
 		t.Errorf("translatedPolicy failed @ ALLOW-ns-testnamespace-TO-app:frontend-policy sets comparison")
@@ -1467,12 +1467,12 @@ func TestNamespaceToFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1494,7 +1494,7 @@ func TestNamespaceToFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1517,7 +1517,7 @@ func TestNamespaceToFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1539,7 +1539,7 @@ func TestNamespaceToFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1575,7 +1575,7 @@ func TestAllowAllNamespacesToAppFrontend(t *testing.T) {
 	sets, _, lists, _, _, iptEntries := translatePolicy(allowAllNsToFrontendPolicy)
 	expectedSets := []string{
 		"app:frontend",
-		"ns-testnamespace",
+		"ns_testnamespace",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
 		t.Errorf("translatedPolicy failed @ ALLOW-all-namespaces-TO-app:frontend-policy sets comparison")
@@ -1605,7 +1605,7 @@ func TestAllowAllNamespacesToAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1627,7 +1627,7 @@ func TestAllowAllNamespacesToAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1650,7 +1650,7 @@ func TestAllowAllNamespacesToAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1672,7 +1672,7 @@ func TestAllowAllNamespacesToAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1709,7 +1709,7 @@ func TestAllowNamespaceDevToAppFrontend(t *testing.T) {
 
 	expectedSets := []string{
 		"app:frontend",
-		"ns-testnamespace",
+		"ns_testnamespace",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
 		t.Errorf("translatedPolicy failed @ ALLOW-ns-namespace:dev-AND-!ns-namespace:test0-AND-!ns-namespace:test1-TO-app:frontend-policy sets comparison")
@@ -1718,9 +1718,9 @@ func TestAllowNamespaceDevToAppFrontend(t *testing.T) {
 	}
 
 	expectedLists := []string{
-		"ns-namespace:dev",
-		"ns-namespace:test0",
-		"ns-namespace:test1",
+		"ns_namespace:dev",
+		"ns_namespace:test0",
+		"ns_namespace:test1",
 	}
 	if !reflect.DeepEqual(lists, expectedLists) {
 		t.Errorf("translatedPolicy failed @ ALLOW-ns-namespace:dev-AND-!ns-namespace:test0-AND-!ns-namespace:test1-TO-app:frontend-policy lists comparison")
@@ -1736,24 +1736,24 @@ func TestAllowNamespaceDevToAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-namespace:dev"),
+				util.GetHashedName("ns_namespace:dev"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesNotFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-namespace:test0"),
+				util.GetHashedName("ns_namespace:test0"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesNotFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-namespace:test1"),
+				util.GetHashedName("ns_namespace:test1"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1775,7 +1775,7 @@ func TestAllowNamespaceDevToAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1798,7 +1798,7 @@ func TestAllowNamespaceDevToAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1820,7 +1820,7 @@ func TestAllowNamespaceDevToAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1861,7 +1861,7 @@ func TestAllowAllToK0AndK1AndAppFrontend(t *testing.T) {
 		"k0",
 		"k1:v0",
 		"k1:v1",
-		"ns-testnamespace",
+		"ns_testnamespace",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
 		t.Errorf("translatedPolicy failed @ AllOW-ALL-TO-k0-AND-k1:v0-AND-k1:v1-AND-app:frontend-policy sets comparison")
@@ -1889,7 +1889,7 @@ func TestAllowAllToK0AndK1AndAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1927,7 +1927,7 @@ func TestAllowAllToK0AndK1AndAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -1966,7 +1966,7 @@ func TestAllowAllToK0AndK1AndAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2004,7 +2004,7 @@ func TestAllowAllToK0AndK1AndAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2059,7 +2059,7 @@ func TestAllowNsDevAndAppBackendToAppFrontend(t *testing.T) {
 
 	expectedSets := []string{
 		"app:frontend",
-		"ns-testnamespace",
+		"ns_testnamespace",
 		"app:backend",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
@@ -2069,7 +2069,7 @@ func TestAllowNsDevAndAppBackendToAppFrontend(t *testing.T) {
 	}
 
 	expectedLists := []string{
-		"ns-ns:dev",
+		"ns_ns:dev",
 	}
 	if !reflect.DeepEqual(lists, expectedLists) {
 		t.Errorf("translatedPolicy failed @ ALLOW-ns-ns:dev-AND-app:backend-TO-app:frontend lists comparison")
@@ -2085,7 +2085,7 @@ func TestAllowNsDevAndAppBackendToAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2095,7 +2095,7 @@ func TestAllowNsDevAndAppBackendToAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-ns:dev"),
+				util.GetHashedName("ns_ns:dev"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2117,7 +2117,7 @@ func TestAllowNsDevAndAppBackendToAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2140,7 +2140,7 @@ func TestAllowNsDevAndAppBackendToAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2162,7 +2162,7 @@ func TestAllowNsDevAndAppBackendToAppFrontend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2200,7 +2200,7 @@ func TestAllowInternalAndExternal(t *testing.T) {
 
 	expectedSets := []string{
 		"app:backdoor",
-		"ns-dangerous",
+		"ns_dangerous",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
 		t.Errorf("translatedPolicy failed @ ALLOW-ALL-TO-app:backdoor-policy sets comparison")
@@ -2223,7 +2223,7 @@ func TestAllowInternalAndExternal(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-dangerous"),
+				util.GetHashedName("ns_dangerous"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2261,7 +2261,7 @@ func TestAllowBackendToFrontendPort8000(t *testing.T) {
 
 	expectedSets := []string{
 		"app:frontend",
-		"ns-testnamespace",
+		"ns_testnamespace",
 		"app:backend",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
@@ -2285,7 +2285,7 @@ func TestAllowBackendToFrontendPort8000(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2295,7 +2295,7 @@ func TestAllowBackendToFrontendPort8000(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2319,7 +2319,7 @@ func TestAllowBackendToFrontendPort8000(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2340,7 +2340,7 @@ func TestAllowBackendToFrontendPort8000(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2378,7 +2378,7 @@ func TestAllowBackendToFrontendWithMissingPort(t *testing.T) {
 
 	expectedSets := []string{
 		"app:frontend",
-		"ns-testnamespace",
+		"ns_testnamespace",
 		"app:backend",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
@@ -2402,7 +2402,7 @@ func TestAllowBackendToFrontendWithMissingPort(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2412,7 +2412,7 @@ func TestAllowBackendToFrontendWithMissingPort(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2434,7 +2434,7 @@ func TestAllowBackendToFrontendWithMissingPort(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2455,7 +2455,7 @@ func TestAllowBackendToFrontendWithMissingPort(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2494,7 +2494,7 @@ func TestAllowMultipleLabelsToMultipleLabels(t *testing.T) {
 	expectedSets := []string{
 		"app:k8s",
 		"team:aks",
-		"ns-acn",
+		"ns_acn",
 		"program:cni",
 		"team:acn",
 		"binary:cns",
@@ -2521,7 +2521,7 @@ func TestAllowMultipleLabelsToMultipleLabels(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-acn"),
+				util.GetHashedName("ns_acn"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2536,7 +2536,7 @@ func TestAllowMultipleLabelsToMultipleLabels(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-acn"),
+				util.GetHashedName("ns_acn"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2562,7 +2562,7 @@ func TestAllowMultipleLabelsToMultipleLabels(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-acn"),
+				util.GetHashedName("ns_acn"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2577,7 +2577,7 @@ func TestAllowMultipleLabelsToMultipleLabels(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-acn"),
+				util.GetHashedName("ns_acn"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2604,7 +2604,7 @@ func TestAllowMultipleLabelsToMultipleLabels(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-acn"),
+				util.GetHashedName("ns_acn"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2632,7 +2632,7 @@ func TestAllowMultipleLabelsToMultipleLabels(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-acn"),
+				util.GetHashedName("ns_acn"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2658,7 +2658,7 @@ func TestAllowMultipleLabelsToMultipleLabels(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-acn"),
+				util.GetHashedName("ns_acn"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2701,7 +2701,7 @@ func TestDenyAllFromAppBackend(t *testing.T) {
 
 	expectedSets := []string{
 		"app:backend",
-		"ns-testnamespace",
+		"ns_testnamespace",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
 		t.Errorf("translatedPolicy failed @ ALLOW-none-FROM-app:backend-policy sets comparison")
@@ -2737,7 +2737,7 @@ func TestAllowAllFromAppBackend(t *testing.T) {
 
 	expectedSets := []string{
 		"app:backend",
-		"ns-testnamespace",
+		"ns_testnamespace",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
 		t.Errorf("translatedPolicy failed @ ALLOW-all-FROM-app:backend-policy sets comparison")
@@ -2760,7 +2760,7 @@ func TestAllowAllFromAppBackend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2782,7 +2782,7 @@ func TestAllowAllFromAppBackend(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2818,7 +2818,7 @@ func TestDenyAllFromNsUnsafe(t *testing.T) {
 	sets, _, lists, _, _, iptEntries := translatePolicy(denyAllFromNsUnsafePolicy)
 
 	expectedSets := []string{
-		"ns-unsafe",
+		"ns_unsafe",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
 		t.Errorf("translatedPolicy failed @ ALLOW-none-FROM-ns-unsafe-policy sets comparison")
@@ -2853,7 +2853,7 @@ func TestAllowAppFrontendToTCPPort53UDPPort53Policy(t *testing.T) {
 
 	expectedSets := []string{
 		"app:frontend",
-		"ns-testnamespace",
+		"ns_testnamespace",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
 		t.Errorf("translatedPolicy failed @ ALLOW-ALL-FROM-app:frontend-TCP-PORT-53-OR-UDP-PORT-53-policy sets comparison")
@@ -2882,7 +2882,7 @@ func TestAllowAppFrontendToTCPPort53UDPPort53Policy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2907,7 +2907,7 @@ func TestAllowAppFrontendToTCPPort53UDPPort53Policy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2928,7 +2928,7 @@ func TestAllowAppFrontendToTCPPort53UDPPort53Policy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2956,7 +2956,7 @@ func TestAllowAppFrontendToTCPPort53UDPPort53Policy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -2979,7 +2979,7 @@ func TestAllowAppFrontendToTCPPort53UDPPort53Policy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3000,7 +3000,7 @@ func TestAllowAppFrontendToTCPPort53UDPPort53Policy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-testnamespace"),
+				util.GetHashedName("ns_testnamespace"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3039,7 +3039,7 @@ func TestComplexPolicy(t *testing.T) {
 
 	expectedSets := []string{
 		"role:db",
-		"ns-default",
+		"ns_default",
 		"role:frontend",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) || !reflect.DeepEqual(setsDiffOrder, expectedSets) {
@@ -3049,7 +3049,7 @@ func TestComplexPolicy(t *testing.T) {
 	}
 
 	expectedLists := []string{
-		"ns-project:myproject",
+		"ns_project:myproject",
 	}
 	if !reflect.DeepEqual(lists, expectedLists) || !reflect.DeepEqual(listsDiffOrder, expectedLists) {
 		t.Errorf("translatedPolicy failed @ k8s-example-policy lists comparison")
@@ -3057,15 +3057,15 @@ func TestComplexPolicy(t *testing.T) {
 		t.Errorf("expectedLists: %v", expectedLists)
 	}
 
-	expectedIngressIPCidrs := [][]string {
+	expectedIngressIPCidrs := [][]string{
 		{"", "", "", "172.17.0.0/16", "172.17.1.0/24nomatch"},
 	}
 
-	expectedEgressIPCidrs := [][]string {
+	expectedEgressIPCidrs := [][]string{
 		{"", "10.0.0.0/24", "10.0.0.1/32nomatch"},
 	}
 
-	if !reflect.DeepEqual(ingressIPCidrs, expectedIngressIPCidrs) || !reflect.DeepEqual(ingressIPCidrsDiffOrder, expectedIngressIPCidrs){
+	if !reflect.DeepEqual(ingressIPCidrs, expectedIngressIPCidrs) || !reflect.DeepEqual(ingressIPCidrsDiffOrder, expectedIngressIPCidrs) {
 		t.Errorf("translatedPolicy failed @ k8s-example-policy ingress IP Cidrs comparison")
 		t.Errorf("ingress IP Cidrs: %v", ingressIPCidrs)
 		t.Errorf("expected ingress IP Cidrs: %v", expectedIngressIPCidrs)
@@ -3087,7 +3087,7 @@ func TestComplexPolicy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3117,7 +3117,7 @@ func TestComplexPolicy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3127,7 +3127,7 @@ func TestComplexPolicy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-project:myproject"),
+				util.GetHashedName("ns_project:myproject"),
 				util.IptablesSrcFlag,
 				util.IptablesProtFlag,
 				"TCP",
@@ -3147,7 +3147,7 @@ func TestComplexPolicy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3157,7 +3157,7 @@ func TestComplexPolicy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3183,7 +3183,7 @@ func TestComplexPolicy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3205,7 +3205,7 @@ func TestComplexPolicy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3230,7 +3230,7 @@ func TestComplexPolicy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3257,7 +3257,7 @@ func TestComplexPolicy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3279,7 +3279,7 @@ func TestComplexPolicy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3300,7 +3300,7 @@ func TestComplexPolicy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3321,7 +3321,7 @@ func TestComplexPolicy(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3441,7 +3441,7 @@ func TestDropPrecedenceOverAllow(t *testing.T) {
 
 	sets, _, lists, _, _, iptEntries := translatePolicy(denyAllPolicy)
 	expectedSets := []string{
-		"ns-default",
+		"ns_default",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
 		t.Errorf("translatedPolicy failed @ k8s-example-policy sets comparison")
@@ -3460,7 +3460,7 @@ func TestDropPrecedenceOverAllow(t *testing.T) {
 	expectedSets = []string{
 		"app:test",
 		"testIn:pod-A",
-		"ns-default",
+		"ns_default",
 		"testIn:pod-B",
 		"testIn:pod-C",
 	}
@@ -3488,7 +3488,7 @@ func TestDropPrecedenceOverAllow(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesDstFlag,
 				util.IptablesJumpFlag,
 				util.IptablesDrop,
@@ -3506,7 +3506,7 @@ func TestDropPrecedenceOverAllow(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3521,7 +3521,7 @@ func TestDropPrecedenceOverAllow(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3547,7 +3547,7 @@ func TestDropPrecedenceOverAllow(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3562,7 +3562,7 @@ func TestDropPrecedenceOverAllow(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3588,7 +3588,7 @@ func TestDropPrecedenceOverAllow(t *testing.T) {
 			Specs: []string{util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3616,7 +3616,7 @@ func TestDropPrecedenceOverAllow(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3642,7 +3642,7 @@ func TestDropPrecedenceOverAllow(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3674,7 +3674,7 @@ func TestDropPrecedenceOverAllow(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3702,7 +3702,7 @@ func TestDropPrecedenceOverAllow(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3728,7 +3728,7 @@ func TestDropPrecedenceOverAllow(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3754,7 +3754,7 @@ func TestDropPrecedenceOverAllow(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-default"),
+				util.GetHashedName("ns_default"),
 				util.IptablesSrcFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3798,7 +3798,7 @@ func TestNamedPorts(t *testing.T) {
 
 	expectedSets := []string{
 		"app:server",
-		"ns-test",
+		"ns_test",
 	}
 	if !reflect.DeepEqual(sets, expectedSets) {
 		t.Errorf("translatedPolicy failed @ ALLOW-ALL-TCP-PORT-serve-80-TO-app:server-IN-ns-test-policy sets comparison")
@@ -3830,7 +3830,7 @@ func TestNamedPorts(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-test"),
+				util.GetHashedName("ns_test"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3857,7 +3857,7 @@ func TestNamedPorts(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-test"),
+				util.GetHashedName("ns_test"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
@@ -3878,7 +3878,7 @@ func TestNamedPorts(t *testing.T) {
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,
 				util.IptablesMatchSetFlag,
-				util.GetHashedName("ns-test"),
+				util.GetHashedName("ns_test"),
 				util.IptablesDstFlag,
 				util.IptablesModuleFlag,
 				util.IptablesSetModuleFlag,

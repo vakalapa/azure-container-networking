@@ -28,10 +28,11 @@ func craftPartialIptEntrySpecFromPort(portRule networkingv1.NetworkPolicyPort, s
 	}
 
 	if portRule.Port != nil {
+		portName := "port_" + portRule.Port.String()
 		partialSpec = append(
 			partialSpec,
 			sPortOrDPortFlag,
-			portRule.Port.String(),
+			portName,
 		)
 	}
 
@@ -48,7 +49,7 @@ func craftPartialIptablesCommentFromPort(portRule networkingv1.NetworkPolicyPort
 	}
 
 	if portRule.Port != nil {
-		partialComment += "PORT-"
+		partialComment += "PORT_"
 		partialComment += portRule.Port.String()
 	}
 
@@ -57,7 +58,7 @@ func craftPartialIptablesCommentFromPort(portRule networkingv1.NetworkPolicyPort
 
 func craftPartialIptEntrySpecFromOpAndLabel(op, label, srcOrDstFlag string, isNamespaceSelector bool) []string {
 	if isNamespaceSelector {
-		label = "ns-" + label
+		label = "ns_" + label
 	}
 	partialSpec := []string{
 		util.IptablesModuleFlag,
@@ -80,7 +81,7 @@ func craftPartialIptEntrySpecFromOpsAndLabels(ns string, ops, labels []string, s
 			util.IptablesModuleFlag,
 			util.IptablesSetModuleFlag,
 			util.IptablesMatchSetFlag,
-			util.GetHashedName("ns-" + ns),
+			util.GetHashedName("ns_" + ns),
 			srcOrDstFlag,
 		}
 	}
@@ -128,7 +129,7 @@ func craftPartialIptablesCommentFromSelector(ns string, selector *metav1.LabelSe
 			return util.KubeAllNamespacesFlag
 		}
 
-		return "ns-" + ns
+		return "ns_" + ns
 	}
 
 	labelsWithOps, _, _ := parseSelector(selector)
@@ -136,7 +137,7 @@ func craftPartialIptablesCommentFromSelector(ns string, selector *metav1.LabelSe
 
 	var comment, prefix, postfix string
 	if isNamespaceSelector {
-		prefix = "ns-"
+		prefix = "ns_"
 	} else {
 		if ns != "" {
 			postfix = "-IN-ns-" + ns
@@ -168,7 +169,7 @@ func translateIngress(ns string, policyName string, targetSelector metav1.LabelS
 	labelsWithOps, _, _ := parseSelector(&targetSelector)
 	ops, labels := GetOperatorsAndLabels(labelsWithOps)
 	sets = append(sets, labels...)
-	sets = append(sets, "ns-"+ns)
+	sets = append(sets, "ns_"+ns)
 	ipCidrs = make([][]string, len(rules))
 
 	targetSelectorIptEntrySpec := craftPartialIptEntrySpecFromOpsAndLabels(ns, ops, labels, util.IptablesDstFlag, false)
@@ -232,7 +233,7 @@ func translateIngress(ns string, policyName string, targetSelector metav1.LabelS
 		if portRuleExists && !fromRuleExists && !allowExternal {
 			for _, portRule := range rule.Ports {
 				if portRule.Port != nil && portRule.Port.IntValue() == 0 {
-					portName := portRule.Port.String()
+					portName := "port_" + portRule.Port.String()
 					namedPorts = append(namedPorts, portName)
 					entry := &iptm.IptEntry{
 						Chain: util.IptablesAzureIngressPortChain,
@@ -288,7 +289,7 @@ func translateIngress(ns string, policyName string, targetSelector metav1.LabelS
 					if len(fromRule.IPBlock.Except) > 0 {
 						for _, except := range fromRule.IPBlock.Except {
 							// TODO move IP cidrs rule to allow based only
-							ipCidrs[i] = append(ipCidrs[i], except + util.IpsetNomatch)
+							ipCidrs[i] = append(ipCidrs[i], except+util.IpsetNomatch)
 						}
 						addedIngressFromEntry = true
 					}
@@ -298,7 +299,7 @@ func translateIngress(ns string, policyName string, targetSelector metav1.LabelS
 					if portRuleExists {
 						for _, portRule := range rule.Ports {
 							if portRule.Port != nil && portRule.Port.IntValue() == 0 {
-								portName := portRule.Port.String()
+								portName := "port_" + portRule.Port.String()
 								namedPorts = append(namedPorts, portName)
 								entry := &iptm.IptEntry{
 									Chain: util.IptablesAzureIngressPortChain,
@@ -404,7 +405,7 @@ func translateIngress(ns string, policyName string, targetSelector metav1.LabelS
 				} else {
 					for i, _ := range nsLabelsWithoutOps {
 						// Add namespaces prefix to distinguish namespace ipset lists and pod ipsets
-						nsLabelsWithoutOps[i] = "ns-" + nsLabelsWithoutOps[i]
+						nsLabelsWithoutOps[i] = "ns_" + nsLabelsWithoutOps[i]
 					}
 				}
 				lists = append(lists, nsLabelsWithoutOps...)
@@ -414,7 +415,7 @@ func translateIngress(ns string, policyName string, targetSelector metav1.LabelS
 				if portRuleExists {
 					for _, portRule := range rule.Ports {
 						if portRule.Port != nil && portRule.Port.IntValue() == 0 {
-							portName := portRule.Port.String()
+							portName := "port_" + portRule.Port.String()
 							namedPorts = append(namedPorts, portName)
 							entry := &iptm.IptEntry{
 								Chain: util.IptablesAzureIngressPortChain,
@@ -498,7 +499,7 @@ func translateIngress(ns string, policyName string, targetSelector metav1.LabelS
 				_, podLabelsWithoutOps := GetOperatorsAndLabels(podLabelsWithOps)
 				if len(podLabelsWithoutOps) == 1 {
 					if podLabelsWithoutOps[0] == "" {
-						podLabelsWithoutOps[0] = "ns-" + ns
+						podLabelsWithoutOps[0] = "ns_" + ns
 					}
 				}
 				sets = append(sets, podLabelsWithoutOps...)
@@ -508,7 +509,7 @@ func translateIngress(ns string, policyName string, targetSelector metav1.LabelS
 				if portRuleExists {
 					for _, portRule := range rule.Ports {
 						if portRule.Port != nil && portRule.Port.IntValue() == 0 {
-							portName := portRule.Port.String()
+							portName := "port_" + portRule.Port.String()
 							namedPorts = append(namedPorts, portName)
 							entry := &iptm.IptEntry{
 								Chain: util.IptablesAzureIngressPortChain,
@@ -599,7 +600,7 @@ func translateIngress(ns string, policyName string, targetSelector metav1.LabelS
 			_, nsLabelsWithoutOps := GetOperatorsAndLabels(nsLabelsWithOps)
 			// Add namespaces prefix to distinguish namespace ipsets and pod ipsets
 			for i, _ := range nsLabelsWithoutOps {
-				nsLabelsWithoutOps[i] = "ns-" + nsLabelsWithoutOps[i]
+				nsLabelsWithoutOps[i] = "ns_" + nsLabelsWithoutOps[i]
 			}
 			lists = append(lists, nsLabelsWithoutOps...)
 
@@ -615,7 +616,7 @@ func translateIngress(ns string, policyName string, targetSelector metav1.LabelS
 			if portRuleExists {
 				for _, portRule := range rule.Ports {
 					if portRule.Port != nil && portRule.Port.IntValue() == 0 {
-						portName := portRule.Port.String()
+						portName := "port_" + portRule.Port.String()
 						namedPorts = append(namedPorts, portName)
 						entry := &iptm.IptEntry{
 							Chain: util.IptablesAzureIngressPortChain,
@@ -810,7 +811,7 @@ func translateEgress(ns string, policyName string, targetSelector metav1.LabelSe
 	labelsWithOps, _, _ := parseSelector(&targetSelector)
 	ops, labels := GetOperatorsAndLabels(labelsWithOps)
 	sets = append(sets, labels...)
-	sets = append(sets, "ns-"+ns)
+	sets = append(sets, "ns_"+ns)
 	ipCidrs = make([][]string, len(rules))
 
 	targetSelectorIptEntrySpec := craftPartialIptEntrySpecFromOpsAndLabels(ns, ops, labels, util.IptablesSrcFlag, false)
@@ -870,7 +871,7 @@ func translateEgress(ns string, policyName string, targetSelector metav1.LabelSe
 		if portRuleExists && !toRuleExists && !allowExternal {
 			for _, portRule := range rule.Ports {
 				if portRule.Port != nil && portRule.Port.IntValue() == 0 {
-					portName := portRule.Port.String()
+					portName := "port_" + portRule.Port.String()
 					namedPorts = append(namedPorts, portName)
 					entry := &iptm.IptEntry{
 						Chain: util.IptablesAzureEgressPortChain,
@@ -936,7 +937,7 @@ func translateEgress(ns string, policyName string, targetSelector metav1.LabelSe
 					if portRuleExists {
 						for _, portRule := range rule.Ports {
 							if portRule.Port != nil && portRule.Port.IntValue() == 0 {
-								portName := portRule.Port.String()
+								portName := "port_" + portRule.Port.String()
 								namedPorts = append(namedPorts, portName)
 								entry := &iptm.IptEntry{
 									Chain: util.IptablesAzureEgressPortChain,
@@ -984,7 +985,7 @@ func translateEgress(ns string, policyName string, targetSelector metav1.LabelSe
 									util.GetHashedName(cidrIpsetName),
 									util.IptablesDstFlag,
 								)
-								entry.Specs = append(	
+								entry.Specs = append(
 									entry.Specs,
 									util.IptablesJumpFlag,
 									util.IptablesAccept,
@@ -1048,7 +1049,7 @@ func translateEgress(ns string, policyName string, targetSelector metav1.LabelSe
 				} else {
 					for i, _ := range nsLabelsWithoutOps {
 						// Add namespaces prefix to distinguish namespace ipset lists and pod ipsets
-						nsLabelsWithoutOps[i] = "ns-" + nsLabelsWithoutOps[i]
+						nsLabelsWithoutOps[i] = "ns_" + nsLabelsWithoutOps[i]
 					}
 				}
 				lists = append(lists, nsLabelsWithoutOps...)
@@ -1058,7 +1059,7 @@ func translateEgress(ns string, policyName string, targetSelector metav1.LabelSe
 				if portRuleExists {
 					for _, portRule := range rule.Ports {
 						if portRule.Port != nil && portRule.Port.IntValue() == 0 {
-							portName := portRule.Port.String()
+							portName := "port_" + portRule.Port.String()
 							namedPorts = append(namedPorts, portName)
 							entry := &iptm.IptEntry{
 								Chain: util.IptablesAzureEgressPortChain,
@@ -1142,7 +1143,7 @@ func translateEgress(ns string, policyName string, targetSelector metav1.LabelSe
 				_, podLabelsWithoutOps := GetOperatorsAndLabels(podLabelsWithOps)
 				if len(podLabelsWithoutOps) == 1 {
 					if podLabelsWithoutOps[0] == "" {
-						podLabelsWithoutOps[0] = "ns-" + ns
+						podLabelsWithoutOps[0] = "ns_" + ns
 					}
 				}
 				sets = append(sets, podLabelsWithoutOps...)
@@ -1152,7 +1153,7 @@ func translateEgress(ns string, policyName string, targetSelector metav1.LabelSe
 				if portRuleExists {
 					for _, portRule := range rule.Ports {
 						if portRule.Port != nil && portRule.Port.IntValue() == 0 {
-							portName := portRule.Port.String()
+							portName := "port_" + portRule.Port.String()
 							namedPorts = append(namedPorts, portName)
 							entry := &iptm.IptEntry{
 								Chain: util.IptablesAzureEgressPortChain,
@@ -1243,7 +1244,7 @@ func translateEgress(ns string, policyName string, targetSelector metav1.LabelSe
 			_, nsLabelsWithoutOps := GetOperatorsAndLabels(nsLabelsWithOps)
 			// Add namespaces prefix to distinguish namespace ipsets and pod ipsets
 			for i, _ := range nsLabelsWithoutOps {
-				nsLabelsWithoutOps[i] = "ns-" + nsLabelsWithoutOps[i]
+				nsLabelsWithoutOps[i] = "ns_" + nsLabelsWithoutOps[i]
 			}
 			lists = append(lists, nsLabelsWithoutOps...)
 
@@ -1259,7 +1260,7 @@ func translateEgress(ns string, policyName string, targetSelector metav1.LabelSe
 			if portRuleExists {
 				for _, portRule := range rule.Ports {
 					if portRule.Port != nil && portRule.Port.IntValue() == 0 {
-						portName := portRule.Port.String()
+						portName := "port_" + portRule.Port.String()
 						namedPorts = append(namedPorts, portName)
 						entry := &iptm.IptEntry{
 							Chain: util.IptablesAzureEgressPortChain,

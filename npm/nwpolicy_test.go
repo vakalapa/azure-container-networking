@@ -40,7 +40,7 @@ func TestAddNetworkPolicy(t *testing.T) {
 	}
 
 	// Create ns-kube-system set
-	if err := ipsMgr.CreateSet("ns-"+util.KubeSystemFlag, append([]string{util.IpsetNetHashFlag})); err != nil {
+	if err := ipsMgr.CreateSet("ns_"+util.KubeSystemFlag, append([]string{util.IpsetNetHashFlag})); err != nil {
 		t.Errorf("TestAddNetworkPolicy failed @ ipsMgr.CreateSet, adding kube-system set%+v", err)
 	}
 
@@ -113,11 +113,11 @@ func TestAddNetworkPolicy(t *testing.T) {
 	ipsMgr = npMgr.nsMap[util.KubeAllNamespacesFlag].ipsMgr
 
 	// Check whether 0.0.0.0/0 got translated to 1.0.0.0/1 and 128.0.0.0/1
-	if ! ipsMgr.Exists("allow-ingress-in-ns-test-nwpolicy-0in", "1.0.0.0/1", util.IpsetNetHashFlag) {
+	if !ipsMgr.Exists("allow-ingress-in-ns-test-nwpolicy-0in", "1.0.0.0/1", util.IpsetNetHashFlag) {
 		t.Errorf("TestDeleteFromSet failed @ ipsMgr.AddToSet")
 	}
 
-	if ! ipsMgr.Exists("allow-ingress-in-ns-test-nwpolicy-0in", "128.0.0.0/1", util.IpsetNetHashFlag) {
+	if !ipsMgr.Exists("allow-ingress-in-ns-test-nwpolicy-0in", "128.0.0.0/1", util.IpsetNetHashFlag) {
 		t.Errorf("TestDeleteFromSet failed @ ipsMgr.AddToSet")
 	}
 
@@ -194,7 +194,7 @@ func TestUpdateNetworkPolicy(t *testing.T) {
 	}()
 
 	// Create ns-kube-system set
-	if err := ipsMgr.CreateSet("ns-"+util.KubeSystemFlag, append([]string{util.IpsetNetHashFlag})); err != nil {
+	if err := ipsMgr.CreateSet("ns_"+util.KubeSystemFlag, append([]string{util.IpsetNetHashFlag})); err != nil {
 		t.Errorf("TestUpdateNetworkPolicy failed @ ipsMgr.CreateSet, adding kube-system set%+v", err)
 	}
 
@@ -306,7 +306,7 @@ func TestDeleteNetworkPolicy(t *testing.T) {
 	}()
 
 	// Create ns-kube-system set
-	if err := ipsMgr.CreateSet("ns-"+util.KubeSystemFlag, append([]string{util.IpsetNetHashFlag})); err != nil {
+	if err := ipsMgr.CreateSet("ns_"+util.KubeSystemFlag, append([]string{util.IpsetNetHashFlag})); err != nil {
 		t.Errorf("TestDeleteNetworkPolicy failed @ ipsMgr.CreateSet, adding kube-system set%+v", err)
 	}
 

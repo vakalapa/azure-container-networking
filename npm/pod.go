@@ -41,7 +41,7 @@ func (npMgr *NetworkPolicyManager) AddPod(podObj *corev1.Pod) error {
 
 	var (
 		err           error
-		podNs         = "ns-" + podObj.ObjectMeta.Namespace
+		podNs         = "ns_" + podObj.ObjectMeta.Namespace
 		podUid        = string(podObj.ObjectMeta.UID)
 		podName       = podObj.ObjectMeta.Name
 		podNodeName   = podObj.Spec.NodeName
@@ -92,7 +92,8 @@ func (npMgr *NetworkPolicyManager) AddPod(podObj *corev1.Pod) error {
 				case v1.ProtocolSCTP:
 					protocol = util.IpsetSCTPFlag
 				}
-				ipsMgr.AddToSet(port.Name, fmt.Sprintf("%s,%s%d", podIP, protocol, port.ContainerPort), util.IpsetIPPortHashFlag, podUid)
+				namedPortName := "port_" + port.Name
+				ipsMgr.AddToSet(namedPortName, fmt.Sprintf("%s,%s%d", podIP, protocol, port.ContainerPort), util.IpsetIPPortHashFlag, podUid)
 			}
 		}
 	}
@@ -156,7 +157,7 @@ func (npMgr *NetworkPolicyManager) UpdatePod(oldPodObj, newPodObj *corev1.Pod) e
 func (npMgr *NetworkPolicyManager) DeletePod(podObj *corev1.Pod) error {
 	var (
 		err           error
-		podNs         = "ns-" + podObj.ObjectMeta.Namespace
+		podNs         = "ns_" + podObj.ObjectMeta.Namespace
 		podUid        = string(podObj.ObjectMeta.UID)
 		podName       = podObj.ObjectMeta.Name
 		podNodeName   = podObj.Spec.NodeName
@@ -209,7 +210,8 @@ func (npMgr *NetworkPolicyManager) DeletePod(podObj *corev1.Pod) error {
 				case v1.ProtocolSCTP:
 					protocol = util.IpsetSCTPFlag
 				}
-				ipsMgr.DeleteFromSet(port.Name, fmt.Sprintf("%s,%s%d", cachedPodIp, protocol, port.ContainerPort), podUid)
+				namedPortName := "port_" + port.Name
+				ipsMgr.DeleteFromSet(namedPortName, fmt.Sprintf("%s,%s%d", cachedPodIp, protocol, port.ContainerPort), podUid)
 			}
 		}
 	}
